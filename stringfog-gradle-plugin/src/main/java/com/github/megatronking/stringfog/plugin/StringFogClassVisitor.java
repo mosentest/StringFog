@@ -27,6 +27,8 @@ import org.objectweb.asm.Opcodes;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.objectweb.asm.Opcodes.INVOKESTATIC;
+
 /**
  * Visit the class to execute string fog.
  *
@@ -55,7 +57,7 @@ import java.util.List;
     private boolean mIgnoreClass;
 
     /* package */ StringFogClassVisitor(IStringFog stringFogImpl, StringFogMappingPrinter mappingPrinter,
-                                 String fogClassName, String key, ClassWriter cw) {
+                                        String fogClassName, String key, ClassWriter cw) {
         super(Opcodes.ASM5, cw);
         this.mStringFogImpl = stringFogImpl;
         this.mMappingPrinter = mappingPrinter;
@@ -105,9 +107,31 @@ import java.util.List;
     }
 
     @Override
-    public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+    public MethodVisitor visitMethod(int access, final String name, final String desc, String signature, String[] exceptions) {
         MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
         if (mv != null && !mIgnoreClass) {
+            //在这里插入去log的逻辑
+            mv = new MethodVisitor(Opcodes.ASM5, mv) {
+//                String methodName = name;
+//                String methodDesc = desc;
+
+                @Override
+                public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
+                    if (owner.equalsIgnoreCase("android/util/Log")
+                            && name.equalsIgnoreCase("i")
+                            && desc.equalsIgnoreCase("(Ljava/lang/String;Ljava/lang/String;)I")) {
+                        //logHook(methodName, methodDesc);
+                        mv.visitMethodInsn(INVOKESTATIC,
+                                "com/github/megatronking/stringfog/log/MzqLog",
+                                "i",
+                                "(Ljava/lang/String;Ljava/lang/String;)I",
+                                false);
+                    } else {
+                        super.visitMethodInsn(opcode, owner, name, desc, itf);
+                    }
+                }
+            };
+
             if ("<clinit>".equals(name)) {
                 isClInitExists = true;
                 // If clinit exists meaning the static fields (not final) would have be inited here.

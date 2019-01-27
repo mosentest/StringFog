@@ -1,14 +1,14 @@
 apply plugin: 'com.android.library'
-apply plugin: 'stringfog'
+//apply plugin: 'stringfog'
 
 // 每个Library可以定义不同的加密key
-stringfog {
-
-    key 'Hello Library'
-    enable true
-    debug false
-    implementation 'com.github.megatronking.stringfog.xor.StringFogImpl'
-}
+//stringfog {
+//
+//    key 'Hello Library'
+//    enable true
+//    debug false
+//    implementation 'com.github.megatronking.stringfog.xor.StringFogImpl'
+//}
 
 android {
     compileSdkVersion 28

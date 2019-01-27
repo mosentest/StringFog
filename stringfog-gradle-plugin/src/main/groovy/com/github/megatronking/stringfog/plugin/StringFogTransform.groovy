@@ -17,7 +17,9 @@ package com.github.megatronking.stringfog.plugin
 import com.android.build.api.transform.*
 import com.android.build.gradle.api.BaseVariant
 import com.android.utils.FileUtils
-import com.github.megatronking.stringfog.plugin.utils.Log
+import com.github.megatronking.stringfog.plugin.StringFogClassGenerator
+import com.github.megatronking.stringfog.plugin.StringFogClassInjector
+import com.github.megatronking.stringfog.plugin.StringFogMappingPrinter
 import com.github.megatronking.stringfog.plugin.utils.MD5
 import com.google.common.collect.ImmutableSet
 import com.google.common.io.Files

@@ -1,5 +1,5 @@
 apply plugin: 'groovy'
-//apply plugin: 'maven'
+apply plugin: 'maven'
 
 dependencies {
     implementation gradleApi()
@@ -22,19 +22,19 @@ sourceSets {
     }
 }
 
-group=GROUP
-archivesBaseName=ARTIFACTID
-version=VERSION
+group = GROUP
+archivesBaseName = ARTIFACTID
+version = VERSION
 
 [compileJava, compileGroovy, javadoc]*.options*.encoding = 'UTF-8'
 
-//uploadArchives {
-//    repositories {
-//        mavenDeployer {
-//            repository(url: uri('../maven'))
-//        }
-//    }
-//}
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../maven'))
+        }
+    }
+}
 
 //apply from: '../bintray_java.gradle'
 //apply from: '../nexus_java.gradle'
