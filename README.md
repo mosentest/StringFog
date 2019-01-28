@@ -45,9 +45,9 @@ buildscript {
     }
     dependencies {
         ...
-        classpath 'com.github.moz1q1.StringFog:gradle-plugin:m1.0.1'
+        classpath 'com.github.moz1q1.StringFog:gradle-plugin:m1.0.2'
         // 选用加解密算法库，默认实现了xor和aes-cbc两种简单算法，也可以使用自己的加解密库。
-        classpath 'com.github.moz1q1.StringFog:xor:m1.0.1'
+        classpath 'com.github.moz1q1.StringFog:xor:m1.0.2'
     }
 }
 ```
@@ -73,7 +73,7 @@ stringfog {
 dependencies {
       ...
       // 这里要和上面选用的加解密算法库一致，用于运行时解密。
-      implementation 'com.github.moz1q1.StringFog:xor:m1.0.1'
+      implementation 'com.github.moz1q1.StringFog:xor:m1.0.2'
 }
 ```
 
