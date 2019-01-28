@@ -44,5 +44,5 @@ dependencies {
 
     // xor加解密库，stringfog中的implementation需依赖此库
 //    implementation 'com.github.megatronking.stringfog:xor:1.0.0'
-    implementation 'com.github.moz1q1.StringFog:xor:m1.0.0'
+    implementation 'com.github.moz1q1.StringFog:xor:m1.0.2'
 }
