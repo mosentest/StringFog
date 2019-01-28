@@ -22,9 +22,13 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        debug {
-            minifyEnabled true
+        release {
+//            buildConfigField "boolean", "LOG_DEBUG", "false"
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+//            buildConfigField "boolean", "LOG_DEBUG", "true"
         }
     }
 }
@@ -39,5 +43,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     // xor加解密库，stringfog中的implementation需依赖此库
-    implementation 'com.github.megatronking.stringfog:xor:1.0.0'
+//    implementation 'com.github.megatronking.stringfog:xor:1.0.0'
+    implementation 'com.github.moz1q1.StringFog:xor:m1.0.0'
 }

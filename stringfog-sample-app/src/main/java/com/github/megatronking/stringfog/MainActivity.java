@@ -50,19 +50,28 @@ public class MainActivity extends AppCompatActivity {
 
         // Test local params
         String title = "MainActivity";
-        ((TextView)findViewById(R.id.text)).setText(title + "Test");
+        ((TextView) findViewById(R.id.text)).setText(title + "Test");
 
         String tag = "stringfog";
 
         Log.i(tag, STATIC_FINAL_FIELD_1);
-        Log.i(tag, STATIC_FINAL_FIELD_2);
-        Log.i(tag, STATIC_FINAL_FIELD_3);
+        Log.v(tag, STATIC_FINAL_FIELD_2);
+        Log.w(tag, STATIC_FINAL_FIELD_3);
 
-        Log.i(tag, static_field_1);
-        Log.i(tag, static_field_2);
-        Log.i(tag, static_field_3);
+        Log.e(tag, static_field_1);
+        Log.d(tag, static_field_2);
+        Log.wtf(tag, static_field_3);
 
-        Log.i(tag, final_field_1);
+        try {
+
+        } catch (Exception e) {
+            Log.w(tag, e);
+            Log.wtf(tag, e);
+            Log.e(tag, "", e);
+            Log.i(tag, "", e);
+            Log.d(tag, "", e);
+            Log.v(tag, "", e);
+        }
         Log.i(tag, final_field_2);
         Log.i(tag, final_field_3);
 

@@ -9,6 +9,9 @@
 - 完全Gradle自动化集成。
 - 不支持InstantRun。
 
+- 在这个老哥的基础上，增加处理log删除操作，原理是替换log
+- 在这个老哥的基础上，在打debug的时候，过滤不处理，不管是否开启enable
+
 ### 原理
 
 ![](https://github.com/MegatronKing/StringFog/blob/master/assets/flow.png)<br>
@@ -38,13 +41,13 @@ StringFog和混淆完全不冲突，也不需要配置反混淆，实际上Strin
 ```
 buildscript {
     repositories {
-        jcenter()
+        maven { url 'https://jitpack.io' }
     }
     dependencies {
         ...
-        classpath 'com.github.megatronking.stringfog:gradle-plugin:2.0.1'
+        classpath 'com.github.moz1q1.StringFog:gradle-plugin:m1.0.1'
         // 选用加解密算法库，默认实现了xor和aes-cbc两种简单算法，也可以使用自己的加解密库。
-        classpath 'com.github.megatronking.stringfog:xor:1.0.0'
+        classpath 'com.github.moz1q1.StringFog:xor:m1.0.1'
     }
 }
 ```
@@ -70,7 +73,7 @@ stringfog {
 dependencies {
       ...
       // 这里要和上面选用的加解密算法库一致，用于运行时解密。
-      compile 'com.github.megatronking.stringfog:xor:1.0.0'
+      implementation 'com.github.moz1q1.StringFog:xor:m1.0.1'
 }
 ```
 

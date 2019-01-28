@@ -6,6 +6,7 @@ buildscript {
             //本地编译好的classpath
             url uri('maven')
         }
+        maven { url 'https://jitpack.io' }
         mavenCentral()
         google()
         jcenter()
@@ -16,6 +17,10 @@ buildscript {
         //classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
         classpath 'com.github.moziqi.stringfog:gradle-plugin:2.0.1'
         classpath 'com.github.moziqi.stringfog:xor:1.0.0'
+
+//        classpath 'com.github.moz1q1.StringFog:gradle-plugin:m1.0.0'
+//        classpath 'com.github.moz1q1.StringFog:xor:m1.0.0'
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -23,6 +28,7 @@ buildscript {
 
 allprojects {
     repositories {
+        maven { url 'https://jitpack.io' }
         mavenCentral()
         google()
         jcenter()
