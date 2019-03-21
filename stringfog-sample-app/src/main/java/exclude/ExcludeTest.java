@@ -11,4 +11,8 @@ public class ExcludeTest {
 
     public static final String EXCLUDE_STRING = "exclude";
 
+    public void a(){
+        System.out.print("我是正常代码");
+    }
+
 }
