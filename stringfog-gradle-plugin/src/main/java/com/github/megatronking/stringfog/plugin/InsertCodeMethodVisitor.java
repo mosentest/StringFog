@@ -67,19 +67,19 @@ public class InsertCodeMethodVisitor extends MethodVisitor {
         int go = random.nextInt(6);
         switch (go) {
             case 1:
-                mv.visitMethodInsn(INVOKEVIRTUAL, "com/github/megatronking/stringfog/insert/LookMe", "a", "()V", false);
+                mv.visitMethodInsn(INVOKESTATIC, "com/github/megatronking/stringfog/insert/LookMe", "a", "()V", false);
                 break;
             case 2:
-                mv.visitMethodInsn(INVOKEVIRTUAL, "com/github/megatronking/stringfog/insert/LookMe", "b", "()V", false);
+                mv.visitMethodInsn(INVOKESTATIC, "com/github/megatronking/stringfog/insert/LookMe", "b", "()V", false);
                 break;
             case 3:
-                mv.visitMethodInsn(INVOKEVIRTUAL, "com/github/megatronking/stringfog/insert/LookMe", "c", "()V", false);
+                mv.visitMethodInsn(INVOKESTATIC, "com/github/megatronking/stringfog/insert/LookMe", "c", "()V", false);
                 break;
             case 4:
-                mv.visitMethodInsn(INVOKEVIRTUAL, "com/github/megatronking/stringfog/insert/LookMe", "d", "()V", false);
+                mv.visitMethodInsn(INVOKESTATIC, "com/github/megatronking/stringfog/insert/LookMe", "d", "()V", false);
                 break;
             case 5:
-                mv.visitMethodInsn(INVOKEVIRTUAL, "com/github/megatronking/stringfog/insert/LookMe", "e", "()V", false);
+                mv.visitMethodInsn(INVOKESTATIC, "com/github/megatronking/stringfog/insert/LookMe", "e", "()V", false);
                 break;
             case 6:
                 break;

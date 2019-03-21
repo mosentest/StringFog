@@ -111,12 +111,12 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
         MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
         if (mv != null && !mIgnoreClass) {
             //在这里插入去log的逻辑
-            mv = new InsertCodeMethodVisitor(Opcodes.ASM5, mv);
+            //mv = new InsertCodeMethodVisitor(Opcodes.ASM5, mv);
 
             if ("<clinit>".equals(name)) {
                 isClInitExists = true;
                 // If clinit exists meaning the static fields (not final) would have be inited here.
-                mv = new MethodVisitor(Opcodes.ASM5, mv) {
+                mv = new InsertCodeMethodVisitor(Opcodes.ASM5, mv) {
 
                     private String lastStashCst;
 
@@ -179,7 +179,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
 
             } else if ("<init>".equals(name)) {
                 // Here init final(not static) and normal fields
-                mv = new MethodVisitor(Opcodes.ASM5, mv) {
+                mv = new InsertCodeMethodVisitor(Opcodes.ASM5, mv) {
                     @Override
                     public void visitLdcInsn(Object cst) {
                         // We don't care about whether the field is final or normal
@@ -195,7 +195,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
                     }
                 };
             } else {
-                mv = new MethodVisitor(Opcodes.ASM5, mv) {
+                mv = new InsertCodeMethodVisitor(Opcodes.ASM5, mv) {
 
                     @Override
                     public void visitLdcInsn(Object cst) {
