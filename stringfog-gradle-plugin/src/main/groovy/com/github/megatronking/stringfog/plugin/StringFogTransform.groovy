@@ -218,6 +218,7 @@ abstract class StringFogTransform extends Transform {
                         case Status.ADDED:
                         case Status.CHANGED:
                             if (mInjector != null) {
+                                System.out.println(".jarInputFile.getPath()：" + jarInputFile.getPath())
                                 mInjector.doFog2Jar(jarInputFile, jarOutputFile)
                             } else {
                                 Files.copy(jarInputFile, jarOutputFile)

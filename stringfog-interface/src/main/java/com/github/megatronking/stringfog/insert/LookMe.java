@@ -11,17 +11,19 @@ public class LookMe {
     public static void a() {
         if (2 == 3) {
             int i = 1;
+            i++;
         } else {
             int j = 3;
+            j++;
         }
-        switch (1) {
+        switch (2) {
             case 2:
                 break;
         }
     }
 
     public static void b() {
-        switch (3) {
+        switch (2) {
             case 2:
                 break;
             default:
@@ -29,13 +31,15 @@ public class LookMe {
         }
         if (3 == 2) {
             int j = 1;
+            j++;
         } else {
             int k = 3;
+            k++;
         }
     }
 
     public static void c() {
-        switch (4) {
+        switch (1) {
             case 1:
                 break;
             default:
@@ -43,18 +47,22 @@ public class LookMe {
         }
         if (3 == 2) {
             int j = 1;
+            j++;
         } else {
             int k = 3;
+            k++;
         }
     }
 
     public static void d() {
         if (100 == 2) {
             float j = 1;
+            j++;
         } else {
             float k = 3;
+            k++;
         }
-        switch (4) {
+        switch (1) {
             case 1:
                 break;
             default:
@@ -63,7 +71,7 @@ public class LookMe {
     }
 
     public static void e() {
-        switch (4) {
+        switch (1) {
             case 1:
                 break;
             default:
@@ -71,8 +79,10 @@ public class LookMe {
         }
         if (100 == 2) {
             double j = 1;
+            j--;
         } else {
             double k = 3;
+            k++;
         }
     }
 }
