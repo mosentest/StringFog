@@ -1,6 +1,6 @@
 Signature-Version: 1.0
 Created-By: 1.0 (Android)
-SHA1-Digest-Manifest: yVv/2qnVY7Be/ClMY5236TrSwt4=
+SHA1-Digest-Manifest: WAIYbDo5aazaLppoZpM1+xb+ICQ=
 X-Android-APK-Signed: 2
 
 Name: AndroidManifest.xml
@@ -91,7 +91,7 @@ Name: META-INF/proguard/androidx-annotations.pro
 SHA1-Digest: TuSmZQ+DB90ljNEzN7Fh1jXQ7qo=
 
 Name: classes.dex
-SHA1-Digest: 8FyFH+JH8sjTV7rs/RTEleEHtQ4=
+SHA1-Digest: 79zHs8ElrF4APuOCzOlv0eDDd/A=
 
 Name: res/anim/abc_fade_in.xml
 SHA1-Digest: XXaSktKiWqcfhbVCAylwxGU9L2s=

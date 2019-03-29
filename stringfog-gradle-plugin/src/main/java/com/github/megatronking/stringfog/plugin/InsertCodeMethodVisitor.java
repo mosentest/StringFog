@@ -64,7 +64,7 @@ public class InsertCodeMethodVisitor extends MethodVisitor {
         mv.visitLdcInsn("");
         mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "print", "(Ljava/lang/String;)V", false);
         Random random = new Random();
-        int go = random.nextInt(6);
+        int go = random.nextInt(5);
         switch (go) {
             case 1:
                 mv.visitMethodInsn(INVOKESTATIC, "com/github/megatronking/stringfog/insert/LookMe", "a", "()V", false);

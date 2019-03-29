@@ -90,7 +90,7 @@ Name: META-INF/proguard/androidx-annotations.pro
 SHA1-Digest: K4gzrGeIoqUhHYNsyLtLHlJtpwg=
 
 Name: classes.dex
-SHA1-Digest: GlDlI3qZ1SF+GZc5zFi+dpBz2xo=
+SHA1-Digest: niJKWlfxcv4GLGiKOSoE4XOyrmY=
 
 Name: res/anim/abc_fade_in.xml
 SHA1-Digest: L0IgyYapku8uZtPqOfviagHTIEk=

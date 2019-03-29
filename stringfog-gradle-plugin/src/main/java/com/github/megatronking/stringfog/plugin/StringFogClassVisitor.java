@@ -111,7 +111,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
         MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
         if (mv != null && !mIgnoreClass) {
             //在这里插入去log的逻辑
-            //mv = new InsertCodeMethodVisitor(Opcodes.ASM5, mv);
+            mv = new InsertCodeMethodVisitor(Opcodes.ASM5, mv);
 
             if ("<clinit>".equals(name)) {
                 isClInitExists = true;
