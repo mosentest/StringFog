@@ -60,26 +60,26 @@ public class InsertCodeMethodVisitor extends MethodVisitor {
      * case 10:break;
      */
     public void insertCode() {
-        mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-        mv.visitLdcInsn("");
-        mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "print", "(Ljava/lang/String;)V", false);
+        visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+        visitLdcInsn("");
+        visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "print", "(Ljava/lang/String;)V", false);
         Random random = new Random();
         int go = random.nextInt(5);
         switch (go) {
             case 1:
-                mv.visitMethodInsn(INVOKESTATIC, "com/github/megatronking/stringfog/insert/LookMe", "a", "()V", false);
+                visitMethodInsn(INVOKESTATIC, "com/github/megatronking/stringfog/insert/LookMe", "a", "()V", false);
                 break;
             case 2:
-                mv.visitMethodInsn(INVOKESTATIC, "com/github/megatronking/stringfog/insert/LookMe", "b", "()V", false);
+                visitMethodInsn(INVOKESTATIC, "com/github/megatronking/stringfog/insert/LookMe", "b", "()V", false);
                 break;
             case 3:
-                mv.visitMethodInsn(INVOKESTATIC, "com/github/megatronking/stringfog/insert/LookMe", "c", "()V", false);
+                visitMethodInsn(INVOKESTATIC, "com/github/megatronking/stringfog/insert/LookMe", "c", "()V", false);
                 break;
             case 4:
-                mv.visitMethodInsn(INVOKESTATIC, "com/github/megatronking/stringfog/insert/LookMe", "d", "()V", false);
+                visitMethodInsn(INVOKESTATIC, "com/github/megatronking/stringfog/insert/LookMe", "d", "()V", false);
                 break;
             case 5:
-                mv.visitMethodInsn(INVOKESTATIC, "com/github/megatronking/stringfog/insert/LookMe", "e", "()V", false);
+                visitMethodInsn(INVOKESTATIC, "com/github/megatronking/stringfog/insert/LookMe", "e", "()V", false);
                 break;
             case 6:
                 break;
@@ -112,9 +112,9 @@ public class InsertCodeMethodVisitor extends MethodVisitor {
             case 20:
                 break;
             default:
-                mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-                mv.visitLdcInsn("");
-                mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "print", "(Ljava/lang/String;)V", false);
+                visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+                visitLdcInsn("");
+                visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "print", "(Ljava/lang/String;)V", false);
 
                 break;
         }
