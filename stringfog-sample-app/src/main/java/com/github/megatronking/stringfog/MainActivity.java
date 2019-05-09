@@ -3,7 +3,10 @@ package com.github.megatronking.stringfog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.megatronking.stringfog.library.LibTest;
 
@@ -48,9 +51,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         // Test local params
         String title = "MainActivity";
         ((TextView) findViewById(R.id.text)).setText(title + "Test");
+        findViewById(R.id.text).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "aaa", Toast.LENGTH_LONG).show();
+            }
+        });
 
         String tag = "stringfog";
 

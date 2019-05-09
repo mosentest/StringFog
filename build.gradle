@@ -22,8 +22,8 @@ buildscript {
 //        classpath 'com.github.moz1q1.StringFog:gradle-plugin:m1.0.2'
 //        classpath 'com.github.moz1q1.StringFog:xor:m1.0.2'
 
-        classpath 'com.github.moziqi.stringfog:gradle-plugin:3.0.1'
-        classpath 'com.github.moziqi.stringfog:xor:3.0.0'
+//        classpath 'com.github.moziqi.stringfog:gradle-plugin:3.0.1'
+//        classpath 'com.github.moziqi.stringfog:xor:3.0.0'
         //部署后
 //        classpath 'com.github.moz1q1.StringFog:gradle-plugin:buriedpoint_3.0.2'
 //        classpath 'com.github.moz1q1.StringFog:xor:buriedpoint_3.0.2'
