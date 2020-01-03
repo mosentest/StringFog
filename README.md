@@ -44,6 +44,7 @@ buildscript {
         maven { url 'https://jitpack.io' }
     }
     dependencies {
+
         ...
         classpath 'com.github.moz1q1.StringFog:gradle-plugin:m2.0.0'
         // 选用加解密算法库，默认实现了xor和aes-cbc两种简单算法，也可以使用自己的加解密库。
