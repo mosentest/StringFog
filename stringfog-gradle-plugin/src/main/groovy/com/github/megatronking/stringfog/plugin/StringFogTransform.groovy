@@ -27,6 +27,8 @@ import groovy.io.FileType
 import groovy.xml.Namespace
 import org.gradle.api.DomainObjectSet
 import org.gradle.api.Project
+import org.gradle.api.Task
+import org.gradle.api.DefaultTask
 
 abstract class StringFogTransform extends Transform {
 
@@ -90,17 +92,40 @@ abstract class StringFogTransform extends Transform {
                 variant.outputs.forEach { output ->
                     def processResources = output.processResources
                     processResources.doLast {
-                        def stringfogDir = applicationId.replace((char) '.', (char) '/')
-                        def stringfogFile = new File(processResources.sourceOutputDir, stringfogDir + File.separator + "StringFog.java")
+//                        def stringfogDir = applicationId.replace((char) '.', (char) '/')
+//                        def stringfogFile = new File(processResources.sourceOutputDir, stringfogDir + File.separator + "StringFog.java")
+//
+//                        // Generate StringFog.java
+//                        StringFogClassGenerator.generate(stringfogFile, applicationId, FOG_CLASS_NAME,
+//                                key, implementation)
+//                        mMappingPrinter = new StringFogMappingPrinter(
+//                                new File(project.buildDir, "outputs/mapping/${variantName.toLowerCase()}/stringfog.txt"))
+//                        // Create class injector
+//                        mInjector = new StringFogClassInjector(fogPackages, key, implementation,
+//                                applicationId + "." + FOG_CLASS_NAME, mMappingPrinter)
 
-                        // Generate StringFog.java
-                        StringFogClassGenerator.generate(stringfogFile, applicationId, FOG_CLASS_NAME,
-                                key, implementation)
-                        mMappingPrinter = new StringFogMappingPrinter(
-                                new File(project.buildDir, "outputs/mapping/${variantName.toLowerCase()}/stringfog.txt"))
-                        // Create class injector
-                        mInjector = new StringFogClassInjector(fogPackages, key, implementation,
-                                applicationId + "." + FOG_CLASS_NAME, mMappingPrinter)
+                        def variantName = variant.name.toUpperCase()[0] + variant.name.substring(1, variant.name.length() - 1)
+                        Task generateTask = project.tasks.findByName(variantName)
+                        if (generateTask == null) {
+                            generateTask = project.tasks.create("generate${variantName}StringFog", DefaultTask)
+
+                            def stringfogDir = new File(project.buildDir, "generated" +
+                                    File.separatorChar + "source" + File.separatorChar + "stringfog" + File.separatorChar + variant.name)
+                            def stringfogFile = new File(stringfogDir, applicationId.replace((char) '.', File.separatorChar) + File.separator + "StringFog.java")
+                            variant.registerJavaGeneratingTask(generateTask, stringfogDir)
+
+                            generateTask.doLast {
+                                mMappingPrinter = new StringFogMappingPrinter(
+                                        new File(project.buildDir, "outputs/mapping/${variant.name.toLowerCase()}/stringfog.txt"))
+                                // Create class injector
+                                mInjector = new StringFogClassInjector(fogPackages, key, implementation,
+                                        applicationId + "." + FOG_CLASS_NAME, mMappingPrinter)
+
+                                // Generate StringFog.java
+                                StringFogClassGenerator.generate(stringfogFile, applicationId, FOG_CLASS_NAME,
+                                        key, implementation)
+                            }
+                        }
                     }
                 }
             }
