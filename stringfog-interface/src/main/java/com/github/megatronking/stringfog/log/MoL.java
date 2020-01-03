@@ -21,30 +21,30 @@ import java.io.Writer;
 /**
  * 根据系统的log，复制过来，注释所以逻辑，改为是空的逻辑
  */
-public final class MzqLog {
+public final class MoL {
 
     /**
-     * Priority constant for the println method; use MzqLog.v.
+     * Priority constant for the println method; use MoL.v.
      */
     public static final int VERBOSE = 2;
 
     /**
-     * Priority constant for the println method; use MzqLog.d.
+     * Priority constant for the println method; use MoL.d.
      */
     public static final int DEBUG = 3;
 
     /**
-     * Priority constant for the println method; use MzqLog.i.
+     * Priority constant for the println method; use MoL.i.
      */
     public static final int INFO = 4;
 
     /**
-     * Priority constant for the println method; use MzqLog.w.
+     * Priority constant for the println method; use MoL.w.
      */
     public static final int WARN = 5;
 
     /**
-     * Priority constant for the println method; use MzqLog.e.
+     * Priority constant for the println method; use MoL.e.
      */
     public static final int ERROR = 6;
 
@@ -79,7 +79,7 @@ public final class MzqLog {
         }
     };
 
-    private MzqLog() {
+    private MoL() {
     }
 
     /**

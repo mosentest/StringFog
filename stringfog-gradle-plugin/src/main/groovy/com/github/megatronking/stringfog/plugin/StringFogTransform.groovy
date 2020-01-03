@@ -55,7 +55,6 @@ abstract class StringFogTransform extends Transform {
             if (project.stringfog.enable) {
                 def applicationId = variants.first().applicationId
                 def manifestFile = project.file("src/main/AndroidManifest.xml")
-                def isDebug = false;
                 if (manifestFile.exists()) {
                     def parsedManifest = new XmlParser().parse(
                             new InputStreamReader(new FileInputStream(manifestFile), "utf-8"))
@@ -65,15 +64,8 @@ abstract class StringFogTransform extends Transform {
                             applicationId = packageName
                         }
                     }
-                    //这里是不会生效的
-                    //https://blog.csdn.net/superxlcr/article/details/77888074
-                    def android = new Namespace('http://schemas.android.com/apk/res/android', 'android')
-                    //获取app节点的debug属性
-                    isDebug = parsedManifest.application[0].attribute(android.debuggable)
                 }
-                if (!isDebug) {
-                    createFogClass(fogPackages, key, implementation, variants, applicationId)
-                }
+                createFogClass(project, fogPackages, key, implementation, variants, applicationId)
             } else {
                 mMappingPrinter = null
                 mInjector = null
@@ -83,49 +75,34 @@ abstract class StringFogTransform extends Transform {
         }
     }
 
-    void createFogClass(String[] fogPackages, String key, String implementation,
+    void createFogClass(def project, String[] fogPackages, String key, String implementation,
                         DomainObjectSet<BaseVariant> variants, def applicationId) {
         variants.all { variant ->
             def buildTypeName = variant.buildType.name
             //在这里控制debug的情况下，不会处理字节码
             if (!"debug".equalsIgnoreCase(buildTypeName)) {
-                variant.outputs.forEach { output ->
-                    def processResources = output.processResources
-                    processResources.doLast {
-//                        def stringfogDir = applicationId.replace((char) '.', (char) '/')
-//                        def stringfogFile = new File(processResources.sourceOutputDir, stringfogDir + File.separator + "StringFog.java")
-//
-//                        // Generate StringFog.java
-//                        StringFogClassGenerator.generate(stringfogFile, applicationId, FOG_CLASS_NAME,
-//                                key, implementation)
-//                        mMappingPrinter = new StringFogMappingPrinter(
-//                                new File(project.buildDir, "outputs/mapping/${variantName.toLowerCase()}/stringfog.txt"))
-//                        // Create class injector
-//                        mInjector = new StringFogClassInjector(fogPackages, key, implementation,
-//                                applicationId + "." + FOG_CLASS_NAME, mMappingPrinter)
+                System.print("buildTypeName>>>" + buildTypeName)
 
-                        def variantName = variant.name.toUpperCase()[0] + variant.name.substring(1, variant.name.length() - 1)
-                        Task generateTask = project.tasks.findByName(variantName)
-                        if (generateTask == null) {
-                            generateTask = project.tasks.create("generate${variantName}StringFog", DefaultTask)
+                def variantName = variant.name.toUpperCase()[0] + variant.name.substring(1, variant.name.length() - 1)
+                Task generateTask = project.tasks.findByName(variantName)
+                if (generateTask == null) {
+                    generateTask = project.tasks.create("generate${variantName}StringFog", DefaultTask)
 
-                            def stringfogDir = new File(project.buildDir, "generated" +
-                                    File.separatorChar + "source" + File.separatorChar + "stringfog" + File.separatorChar + variant.name)
-                            def stringfogFile = new File(stringfogDir, applicationId.replace((char) '.', File.separatorChar) + File.separator + "StringFog.java")
-                            variant.registerJavaGeneratingTask(generateTask, stringfogDir)
+                    def stringfogDir = new File(project.buildDir, "generated" +
+                            File.separatorChar + "source" + File.separatorChar + "stringfog" + File.separatorChar + variant.name)
+                    def stringfogFile = new File(stringfogDir, applicationId.replace((char)'.', File.separatorChar) + File.separator + "StringFog.java")
+                    variant.registerJavaGeneratingTask(generateTask, stringfogDir)
 
-                            generateTask.doLast {
-                                mMappingPrinter = new StringFogMappingPrinter(
-                                        new File(project.buildDir, "outputs/mapping/${variant.name.toLowerCase()}/stringfog.txt"))
-                                // Create class injector
-                                mInjector = new StringFogClassInjector(fogPackages, key, implementation,
-                                        applicationId + "." + FOG_CLASS_NAME, mMappingPrinter)
+                    generateTask.doLast {
+                        mMappingPrinter = new StringFogMappingPrinter(
+                                new File(project.buildDir, "outputs/mapping/${variant.name.toLowerCase()}/stringfog.txt"))
+                        // Create class injector
+                        mInjector = new StringFogClassInjector(fogPackages, key, implementation,
+                                applicationId + "." + FOG_CLASS_NAME, mMappingPrinter)
 
-                                // Generate StringFog.java
-                                StringFogClassGenerator.generate(stringfogFile, applicationId, FOG_CLASS_NAME,
-                                        key, implementation)
-                            }
-                        }
+                        // Generate StringFog.java
+                        StringFogClassGenerator.generate(stringfogFile, applicationId, FOG_CLASS_NAME,
+                                key, implementation)
                     }
                 }
             }
@@ -156,6 +133,10 @@ abstract class StringFogTransform extends Transform {
     void transform(TransformInvocation transformInvocation) throws TransformException, InterruptedException, IOException {
         def dirInputs = new HashSet<>()
         def jarInputs = new HashSet<>()
+
+        if (!transformInvocation.isIncremental()) {
+            transformInvocation.getOutputProvider().deleteAll()
+        }
 
         // Collecting inputs.
         transformInvocation.inputs.each { input ->
@@ -209,10 +190,6 @@ abstract class StringFogTransform extends Transform {
                             }
                         }
                     } else {
-                        if (dirOutput.exists()) {
-                            dirOutput.deleteDir()
-                        }
-
                         dirInput.file.traverse(type: FileType.FILES) { fileInput ->
                             File fileOutput = new File(fileInput.getAbsolutePath().replace(dirInput.file.getAbsolutePath(), dirOutput.getAbsolutePath()))
                             FileUtils.mkdirs(fileOutput.parentFile)

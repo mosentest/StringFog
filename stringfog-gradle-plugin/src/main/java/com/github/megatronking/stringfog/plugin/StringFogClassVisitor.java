@@ -122,7 +122,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
                             && desc.equalsIgnoreCase("(Ljava/lang/String;Ljava/lang/String;)I")) {
                         //logHook(methodName, methodDesc);
                         mv.visitMethodInsn(INVOKESTATIC,
-                                "com/github/megatronking/stringfog/log/MzqLog",
+                                "com/github/megatronking/stringfog/log/MoL",
                                 "i",
                                 "(Ljava/lang/String;Ljava/lang/String;)I",
                                 false);
@@ -131,7 +131,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
                             && desc.equalsIgnoreCase("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I")) {
                         //logHook(methodName, methodDesc);
                         mv.visitMethodInsn(INVOKESTATIC,
-                                "com/github/megatronking/stringfog/log/MzqLog",
+                                "com/github/megatronking/stringfog/log/MoL",
                                 "i",
                                 "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I",
                                 false);
@@ -140,7 +140,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
                             && desc.equalsIgnoreCase("(Ljava/lang/String;Ljava/lang/String;)I")) {
                         //logHook(methodName, methodDesc);
                         mv.visitMethodInsn(INVOKESTATIC,
-                                "com/github/megatronking/stringfog/log/MzqLog",
+                                "com/github/megatronking/stringfog/log/MoL",
                                 "v",
                                 "(Ljava/lang/String;Ljava/lang/String;)I",
                                 false);
@@ -149,7 +149,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
                             && desc.equalsIgnoreCase("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I")) {
                         //logHook(methodName, methodDesc);
                         mv.visitMethodInsn(INVOKESTATIC,
-                                "com/github/megatronking/stringfog/log/MzqLog",
+                                "com/github/megatronking/stringfog/log/MoL",
                                 "v",
                                 "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I",
                                 false);
@@ -158,7 +158,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
                             && desc.equalsIgnoreCase("(Ljava/lang/String;Ljava/lang/String;)I")) {
                         //logHook(methodName, methodDesc);
                         mv.visitMethodInsn(INVOKESTATIC,
-                                "com/github/megatronking/stringfog/log/MzqLog",
+                                "com/github/megatronking/stringfog/log/MoL",
                                 "d",
                                 "(Ljava/lang/String;Ljava/lang/String;)I",
                                 false);
@@ -167,7 +167,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
                             && desc.equalsIgnoreCase("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I")) {
                         //logHook(methodName, methodDesc);
                         mv.visitMethodInsn(INVOKESTATIC,
-                                "com/github/megatronking/stringfog/log/MzqLog",
+                                "com/github/megatronking/stringfog/log/MoL",
                                 "d",
                                 "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I",
                                 false);
@@ -176,7 +176,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
                             && desc.equalsIgnoreCase("(Ljava/lang/String;Ljava/lang/String;)I")) {
                         //logHook(methodName, methodDesc);
                         mv.visitMethodInsn(INVOKESTATIC,
-                                "com/github/megatronking/stringfog/log/MzqLog",
+                                "com/github/megatronking/stringfog/log/MoL",
                                 "w",
                                 "(Ljava/lang/String;Ljava/lang/String;)I",
                                 false);
@@ -185,7 +185,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
                             && desc.equalsIgnoreCase("(Ljava/lang/String;Ljava/lang/Throwable;)I")) {
                         //logHook(methodName, methodDesc);
                         mv.visitMethodInsn(INVOKESTATIC,
-                                "com/github/megatronking/stringfog/log/MzqLog",
+                                "com/github/megatronking/stringfog/log/MoL",
                                 "w",
                                 "(Ljava/lang/String;Ljava/lang/Throwable;)I",
                                 false);
@@ -194,7 +194,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
                             && desc.equalsIgnoreCase("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I")) {
                         //logHook(methodName, methodDesc);
                         mv.visitMethodInsn(INVOKESTATIC,
-                                "com/github/megatronking/stringfog/log/MzqLog",
+                                "com/github/megatronking/stringfog/log/MoL",
                                 "w",
                                 "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I",
                                 false);
@@ -203,7 +203,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
                             && desc.equalsIgnoreCase("(Ljava/lang/String;Ljava/lang/String;)I")) {
                         //logHook(methodName, methodDesc);
                         mv.visitMethodInsn(INVOKESTATIC,
-                                "com/github/megatronking/stringfog/log/MzqLog",
+                                "com/github/megatronking/stringfog/log/MoL",
                                 "e",
                                 "(Ljava/lang/String;Ljava/lang/String;)I",
                                 false);
@@ -212,7 +212,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
                             && desc.equalsIgnoreCase("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I")) {
                         //logHook(methodName, methodDesc);
                         mv.visitMethodInsn(INVOKESTATIC,
-                                "com/github/megatronking/stringfog/log/MzqLog",
+                                "com/github/megatronking/stringfog/log/MoL",
                                 "e",
                                 "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I",
                                 false);
@@ -221,7 +221,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
                             && desc.equalsIgnoreCase("(Ljava/lang/String;Ljava/lang/String;)I")) {
                         //logHook(methodName, methodDesc);
                         mv.visitMethodInsn(INVOKESTATIC,
-                                "com/github/megatronking/stringfog/log/MzqLog",
+                                "com/github/megatronking/stringfog/log/MoL",
                                 "wtf",
                                 "(Ljava/lang/String;Ljava/lang/String;)I",
                                 false);
@@ -230,7 +230,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
                             && desc.equalsIgnoreCase("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I")) {
                         //logHook(methodName, methodDesc);
                         mv.visitMethodInsn(INVOKESTATIC,
-                                "com/github/megatronking/stringfog/log/MzqLog",
+                                "com/github/megatronking/stringfog/log/MoL",
                                 "wtf",
                                 "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I",
                                 false);
@@ -239,7 +239,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
                             && desc.equalsIgnoreCase("(Ljava/lang/String;Ljava/lang/Throwable;)I")) {
                         //logHook(methodName, methodDesc);
                         mv.visitMethodInsn(INVOKESTATIC,
-                                "com/github/megatronking/stringfog/log/MzqLog",
+                                "com/github/megatronking/stringfog/log/MoL",
                                 "wtf",
                                 "(Ljava/lang/String;Ljava/lang/Throwable;)I",
                                 false);
