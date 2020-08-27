@@ -68,6 +68,14 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
     @Override
     public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
         this.mClassName = name;
+        //实现替换父类
+        if ("android/webkit/WebView".equals(superName)) {
+            System.out.println("name>>>" + name);
+            System.out.println("superName>>>" + superName);
+            if (!"android/webkit/FixWebView".equals(name)) {
+                superName = "android/webkit/FixWebView";
+            }
+        }
         super.visit(version, access, name, signature, superName, interfaces);
     }
 
@@ -234,7 +242,7 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
                                 "wtf",
                                 "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I",
                                 false);
-                    }  else if (owner.equalsIgnoreCase("android/util/Log")
+                    } else if (owner.equalsIgnoreCase("android/util/Log")
                             && name.equalsIgnoreCase("wtf")
                             && desc.equalsIgnoreCase("(Ljava/lang/String;Ljava/lang/Throwable;)I")) {
                         //logHook(methodName, methodDesc);

@@ -8,7 +8,7 @@ stringfog {
     // 指定加解密的具体实现类，可以用默认实现的xor库或者aes-cbc库，也可以自己定制实现，记得配置dependencies
     implementation 'com.github.megatronking.stringfog.xor.StringFogImpl'
     // 指定需加密的代码包路径，可配置多个，未指定将默认全部加密
-    fogPackages = ["com.github.megatronking.stringfog"]
+//    fogPackages = ["com.github.megatronking.stringfog"]
 }
 
 android {
@@ -46,5 +46,6 @@ dependencies {
 //    implementation 'com.github.megatronking.stringfog:xor:1.0.0'
 //    implementation 'com.github.moz1q1.StringFog:xor:m1.0.2'
 //    implementation 'com.github.moziqi.stringfog:xor:1.1.0'
+
     implementation project(':stringfog-ext:xor')
 }

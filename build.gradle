@@ -16,9 +16,11 @@ buildscript {
         //classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         //classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
 
+        //本地
         classpath 'com.github.moziqi.stringfog:gradle-plugin:2.1.0'
         classpath 'com.github.moziqi.stringfog:xor:1.1.0'
 
+        //远程服务器
 //        classpath 'com.github.moz1q1.StringFog:gradle-plugin:m1.0.2'
 //        classpath 'com.github.moz1q1.StringFog:xor:m1.0.2'
 
