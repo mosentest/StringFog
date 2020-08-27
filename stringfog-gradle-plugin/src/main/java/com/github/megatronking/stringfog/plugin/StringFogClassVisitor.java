@@ -117,6 +117,33 @@ import static org.objectweb.asm.Opcodes.INVOKESTATIC;
     @Override
     public MethodVisitor visitMethod(int access, final String name, final String desc, String signature, String[] exceptions) {
         MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
+
+        //https://opensource.sensorsdata.cn/opensource/%e7%a5%9e%e7%ad%96-android-%e5%85%a8%e5%9f%8b%e7%82%b9%e6%8f%92%e4%bb%b6%e4%bb%8b%e7%bb%8d-%e6%95%b0%e6%8d%ae%e9%87%87%e9%9b%86/
+        if (name.equals("a")
+                && desc.equals("(Landroid/webkit/WebView;)V")
+                && access == Opcodes.ACC_PRIVATE) {
+            System.out.println("baidu lbs");
+            if (mv != null) {
+                //获取方法的入参
+                mv.visitVarInsn(Opcodes.ALOAD, 1);
+                mv.visitLdcInsn("searchBoxJavaBridge_");
+                mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "android/webkit/WebView", "removeJavascriptInterface", "(Ljava/lang/String;)V", false);
+                mv.visitVarInsn(Opcodes.ALOAD, 1);
+                mv.visitLdcInsn("accessibility");
+                mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "android/webkit/WebView", "removeJavascriptInterface", "(Ljava/lang/String;)V", false);
+                mv.visitVarInsn(Opcodes.ALOAD, 1);
+                mv.visitLdcInsn("accessibilityTraversal");
+                mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "android/webkit/WebView", "removeJavascriptInterface", "(Ljava/lang/String;)V", false);
+            }
+        }
+//        if (name.equals("onClick") && desc.equals("(Landroid/view/View;)V")) {
+//            if (mv != null) {
+//                mv.visitLdcInsn("HookLog");
+//                mv.visitVarInsn(Opcodes.ALOAD, 1);
+//                mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "android/view/View", "toString", "()Ljava/lang/String;", false);
+//                mv.visitMethodInsn(INVOKESTATIC, "android/util/Log", "e", "(Ljava/lang/String;Ljava/lang/String;)I", false);
+//            }
+//        }
         if (mv != null && !mIgnoreClass) {
             //在这里插入去log的逻辑
             mv = new MethodVisitor(Opcodes.ASM5, mv) {

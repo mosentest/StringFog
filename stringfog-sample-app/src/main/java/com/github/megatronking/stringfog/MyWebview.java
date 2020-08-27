@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
 import android.webkit.WebView;
 
 /**
@@ -31,5 +33,15 @@ public class MyWebview extends WebView {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public MyWebview(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    private void a(WebView webView) {
+        //webView.removeJavascriptInterface("ccccc");
+        webView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("TAG", v.toString());
+            }
+        });
     }
 }

@@ -3,6 +3,8 @@ package com.github.megatronking.stringfog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.github.megatronking.stringfog.library.LibTest;
@@ -85,4 +87,13 @@ public class MainActivity extends AppCompatActivity {
         Log.i(tag, LibTest.ACTION);
     }
 
+
+    private void a(WebView webView) {
+        webView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
 }
