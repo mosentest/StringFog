@@ -48,4 +48,9 @@ abstract class StringFogExtension {
      */
     var packageName: String? = null
 
+    /**
+     * 辣鸡代码类
+     */
+    var junkCodeClass: String? = null
+
 }

@@ -1,5 +1,10 @@
 
 # StringFog
+
+基于stringfog实现辣鸡代码插入
+
+
+
 一款自动对dex/aar/jar文件中的字符串进行加密Android插件工具，正如名字所言，给字符串加上一层雾霭，使人难以窥视其真面目。
 
 - 支持java/kotlin。
@@ -73,7 +78,11 @@ stringfog {
     // 也可以使用text或者bytes
     mode com.github.megatronking.stringfog.plugin.StringFogMode.bytes
     //应用的包名
-    packageName = "com.github.megatronking"
+    packageName = "com.xxxx.xxx.huawei"
+    //开启调试
+    debug true
+    //辣鸡代码类
+    junkCodeClass = "com.xxx.xxx.huawei.PrintStream"
 }
 ```
 

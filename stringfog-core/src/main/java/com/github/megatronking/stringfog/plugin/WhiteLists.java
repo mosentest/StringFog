@@ -35,6 +35,8 @@ final class WhiteLists {
         // default classes short name in white list.
         // BuildConfig support fog
         //addWhiteList("BuildConfig");
+        //不处理这个
+        addWhiteList("Binding");
         addWhiteList("R");
         addWhiteList("R2");
         addWhiteList("StringFog");
@@ -53,7 +55,7 @@ final class WhiteLists {
 
     private static boolean checkClass(String name) {
         for (String className : CLASS_WHITE_LIST) {
-            if (name.equals(className)) {
+            if (name.equals(className) || name.endsWith(className)) {
                 return true;
             }
         }

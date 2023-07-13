@@ -113,7 +113,7 @@ public final class StringFogClassInjector {
             cv = cw;
         } else {
             cv = ClassVisitorFactory.create(mStringFogImpl, mMappingPrinter, mFogPackages,
-                    mKeyGenerator, mFogClassName, cr.getClassName() , mMode, cw);
+                    mKeyGenerator, mFogClassName, cr.getClassName() , mMode, cw,"");
         }
         cr.accept(cv, 0);
         classOut.write(cw.toByteArray());
