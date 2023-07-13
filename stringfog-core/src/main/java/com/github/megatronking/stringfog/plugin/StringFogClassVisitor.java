@@ -248,7 +248,8 @@ import java.util.List;
     }
 
     private boolean canEncrypted(String value) {
-        return !TextUtils.isEmptyAfterTrim(value) && value.length() < 65536 >> 2 && mStringFogImpl.shouldFog(value);
+//        return !TextUtils.isEmptyAfterTrim(value) && value.length() < 65536 >> 2 && mStringFogImpl.shouldFog(value);
+        return false;
     }
 
     private void encryptAndWrite(String value, MethodVisitor mv) {
