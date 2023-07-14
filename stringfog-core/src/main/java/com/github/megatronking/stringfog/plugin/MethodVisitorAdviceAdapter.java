@@ -44,7 +44,7 @@ class MethodVisitorAdviceAdapter extends AdviceAdapter {
         //用一个本地变量接受上一步执行的结果
         storeLocal(start);
         loadLocal(start);
-        mv.visitMethodInsn(INVOKESTATIC, mJunkCodeClass.replace(".", "/"), String.valueOf(lowercase.charAt(new Random().nextInt(lowercase.length()))), "(J)V", false);
+        mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(lowercase.length())), String.valueOf(lowercase.charAt(new Random().nextInt(lowercase.length()))), "(J)V", false);
     }
 
     /**
@@ -88,7 +88,7 @@ class MethodVisitorAdviceAdapter extends AdviceAdapter {
             mv.visitMethodInsn(INVOKESTATIC, mJunkCodeClass.replace(".", "/"), "println", "(Ljava/lang/String;)V", false);
 
             loadLocal(end);
-            mv.visitMethodInsn(INVOKESTATIC, mJunkCodeClass.replace(".", "/"), String.valueOf(lowercase.charAt(new Random().nextInt(lowercase.length()))), "(J)V", false);
+            mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(lowercase.length())), String.valueOf(lowercase.charAt(new Random().nextInt(lowercase.length()))), "(J)V", false);
         }
     }
 }

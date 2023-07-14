@@ -222,7 +222,7 @@ import java.util.List;
                 }
 
             };
-            mv = new MethodVisitorAdviceAdapter(Opcodes.ASM7, mv, access, name, desc, mJunkCodeClass);
+//            mv = new MethodVisitorAdviceAdapter(Opcodes.ASM7, mv, access, name, desc, mJunkCodeClass);
         }
         return mv;
     }
