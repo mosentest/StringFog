@@ -16,7 +16,7 @@ import java.util.Random;
 class MethodVisitorAdviceAdapter extends AdviceAdapter {
 
     String lowercase = "abcdefghijklmnopqrstuvwxyz";
-    private int start;
+    private int startLocal;
 
     private String mJunkCodeClass;
 
@@ -40,11 +40,30 @@ class MethodVisitorAdviceAdapter extends AdviceAdapter {
         super.onMethodEnter();
         invokeStatic(Type.getType("Ljava/lang/System;"), new Method("currentTimeMillis", "()J"));
         //创建一个long类型的本地变量
-        start = newLocal(Type.LONG_TYPE);
+        startLocal = newLocal(Type.LONG_TYPE);
         //用一个本地变量接受上一步执行的结果
-        storeLocal(start);
-        loadLocal(start);
-        mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(lowercase.length())), String.valueOf(lowercase.charAt(new Random().nextInt(lowercase.length()))), "(J)V", false);
+        storeLocal(startLocal);
+        //loadLocal(startLocal);
+        //mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(lowercase.length())), String.valueOf(lowercase.charAt(new Random().nextInt(lowercase.length()))), "(J)V", false);
+    }
+
+    @Override
+    public void visitLineNumber(int line, Label start) {
+        super.visitLineNumber(line, start);
+        //在有需要的代码行插入逻辑
+        if (new Random().nextBoolean()) {
+            loadLocal(startLocal);
+            mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(lowercase.length())), String.valueOf(lowercase.charAt(new Random().nextInt(lowercase.length()))), "(J)V", false);
+        }
+    }
+
+    @Override
+    public void visitLabel(Label label) {
+        super.visitLabel(label);
+        if (new Random().nextBoolean()) {
+            loadLocal(startLocal);
+            mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(lowercase.length())), String.valueOf(lowercase.charAt(new Random().nextInt(lowercase.length()))), "(J)V", false);
+        }
     }
 
     /**
@@ -77,7 +96,7 @@ class MethodVisitorAdviceAdapter extends AdviceAdapter {
             invokeVirtual(Type.getType("Ljava/lang/StringBuilder;"), new Method("append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;"));
             //减法
             loadLocal(end);
-            loadLocal(start);
+            loadLocal(startLocal);
             math(SUB, Type.LONG_TYPE);
             invokeVirtual(Type.getType("Ljava/lang/StringBuilder;"), new Method("append", "(J)Ljava/lang/StringBuilder;"));
             visitLdcInsn(" ms_" + lowercase.charAt(new Random().nextInt(lowercase.length())));
