@@ -2,6 +2,7 @@ package com.github.megatronking.stringfog.plugin;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.commons.AdviceAdapter;
 import org.objectweb.asm.commons.Method;
@@ -16,9 +17,10 @@ import java.util.Random;
 class MethodVisitorAdviceAdapter extends AdviceAdapter {
 
     String lowercase = "abcdefghijklmnopqrstuvwxyz";
-    private int startLocal;
 
     private String mJunkCodeClass;
+    private int startLocal;
+    private boolean isGetArgs;
 
     /**
      * Constructs a new {@link AdviceAdapter}.
@@ -43,27 +45,37 @@ class MethodVisitorAdviceAdapter extends AdviceAdapter {
         startLocal = newLocal(Type.LONG_TYPE);
         //用一个本地变量接受上一步执行的结果
         storeLocal(startLocal);
-        //loadLocal(startLocal);
-        //mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(lowercase.length())), String.valueOf(lowercase.charAt(new Random().nextInt(lowercase.length()))), "(J)V", false);
+
+        isGetArgs = false;
+        Type[] argumentTypes = getArgumentTypes();
+        if (argumentTypes.length > 0) {
+            int i = new Random().nextInt(argumentTypes.length);
+            Type argumentType = argumentTypes[i];
+            loadArg(i);
+            // 基本类型转换为包装类型
+            box(argumentType);
+            mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(lowercase.length())), "arg", "(Ljava/lang/Object;)V", false);
+            isGetArgs = true;
+        }
     }
 
     @Override
     public void visitLineNumber(int line, Label start) {
         super.visitLineNumber(line, start);
         //在有需要的代码行插入逻辑
-        if (new Random().nextBoolean()) {
-            loadLocal(startLocal);
-            mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(lowercase.length())), String.valueOf(lowercase.charAt(new Random().nextInt(lowercase.length()))), "(J)V", false);
-        }
+//        randomInsert();
+    }
+
+    private void randomInsert() {
+        loadLocal(startLocal);
+        mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(lowercase.length())), String.valueOf(lowercase.charAt(new Random().nextInt(lowercase.length()))), "(J)V", false);
     }
 
     @Override
     public void visitLabel(Label label) {
         super.visitLabel(label);
-        if (new Random().nextBoolean()) {
-            loadLocal(startLocal);
-            mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(lowercase.length())), String.valueOf(lowercase.charAt(new Random().nextInt(lowercase.length()))), "(J)V", false);
-        }
+        //在有需要的代码行插入逻辑
+        randomInsert();
     }
 
     /**
@@ -92,7 +104,7 @@ class MethodVisitorAdviceAdapter extends AdviceAdapter {
             newInstance(Type.getType("Ljava/lang/StringBuilder;"));
             dup();
             invokeConstructor(Type.getType("Ljava/lang/StringBuilder;"), new Method("<init>", "()V"));
-            visitLdcInsn(lowercase.charAt(new Random().nextInt(lowercase.length())) + "_time :");
+            visitLdcInsn(lowercase.charAt(new Random().nextInt(lowercase.length())) + getName() + "_time :");
             invokeVirtual(Type.getType("Ljava/lang/StringBuilder;"), new Method("append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;"));
             //减法
             loadLocal(end);
@@ -104,7 +116,7 @@ class MethodVisitorAdviceAdapter extends AdviceAdapter {
             invokeVirtual(Type.getType("Ljava/lang/StringBuilder;"), new Method("toString", "()Ljava/lang/String;"));
             //--- invokeVirtual(Type.getType("Ljava/io/PrintStream;"),new  Method("println","(Ljava/lang/String;)V"));
             //--  invokeVirtual(Type.getType("L" + mJunkCodeClass.replace(".", "/") + ";"), new Method("println", "(Ljava/lang/String;)V"));
-            mv.visitMethodInsn(INVOKESTATIC, mJunkCodeClass.replace(".", "/"), "println", "(Ljava/lang/String;)V", false);
+            mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(lowercase.length())), "println", "(Ljava/lang/String;)V", false);
 
             loadLocal(end);
             mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(lowercase.length())), String.valueOf(lowercase.charAt(new Random().nextInt(lowercase.length()))), "(J)V", false);
