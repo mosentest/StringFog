@@ -37,6 +37,7 @@ abstract class StringFogTransform extends Transform {
 
     protected String mImplementation
     protected StringFogMode mMode
+    protected int mJunkCodeLen
 
     StringFogTransform(Project project, DomainObjectSet<BaseVariant> variants) {
         project.afterEvaluate {
@@ -44,6 +45,7 @@ abstract class StringFogTransform extends Transform {
             String[] fogPackages = project.stringfog.fogPackages
             String implementation = project.stringfog.implementation
             StringFogMode mode = project.stringfog.mode
+            int junkCodeLen = project.stringfog.junkCodeLen
             if (kg == null) {
                 throw new IllegalArgumentException("Missing stringfog kg config")
             }
@@ -51,17 +53,23 @@ abstract class StringFogTransform extends Transform {
                 throw new IllegalArgumentException("Missing stringfog implementation config")
             }
             if (project.stringfog.enable) {
-                def applicationId = variants.first().applicationId
-                def manifestFile = project.file("src/main/AndroidManifest.xml")
-                if (manifestFile.exists()) {
-                    def parsedManifest = new XmlParser().parse(
-                            new InputStreamReader(new FileInputStream(manifestFile), "utf-8"))
-                    if (parsedManifest != null) {
-                        def packageName = parsedManifest.attribute("package")
-                        if (packageName != null) {
-                            applicationId = packageName
+                def applicationId
+                try {
+                    applicationId = variants.first().applicationId
+                    def manifestFile = project.file("src/main/AndroidManifest.xml")
+                    if (manifestFile.exists()) {
+                        def parsedManifest = new XmlParser().parse(
+                                new InputStreamReader(new FileInputStream(manifestFile), "utf-8"))
+                        if (parsedManifest != null) {
+                            def packageName = parsedManifest.attribute("package")
+                            if (packageName != null) {
+                                applicationId = packageName
+                            }
                         }
                     }
+                } catch (e) {
+                    //e.printStackTrace()
+                    applicationId = project.stringfog.packageName
                 }
                 createFogClass(project, fogPackages, kg, implementation, mode, variants, applicationId)
             } else {
@@ -70,6 +78,7 @@ abstract class StringFogTransform extends Transform {
             }
             mImplementation = implementation
             mMode = mode
+            mJunkCodeLen = junkCodeLen
         }
     }
 
@@ -83,7 +92,7 @@ abstract class StringFogTransform extends Transform {
 
                 def stringfogDir = new File(project.buildDir, "generated" +
                         File.separatorChar + "source" + File.separatorChar + "stringfog" + File.separatorChar + variant.name)
-                def stringfogFile = new File(stringfogDir, applicationId.replace((char)'.', File.separatorChar) + File.separator + "StringFog.java")
+                def stringfogFile = new File(stringfogDir, applicationId.replace((char) '.', File.separatorChar) + File.separator + "StringFog.java")
                 variant.registerJavaGeneratingTask(generateTask, stringfogDir)
 
                 generateTask.doLast {
@@ -91,7 +100,7 @@ abstract class StringFogTransform extends Transform {
                             new File(project.buildDir, "outputs/mapping/${variant.name.toLowerCase()}/stringfog.txt"))
                     // Create class injector
                     mInjector = new StringFogClassInjector(fogPackages, kg, implementation, mode,
-                            applicationId + "." + FOG_CLASS_NAME, mMappingPrinter)
+                            applicationId + "." + FOG_CLASS_NAME, mMappingPrinter, mJunkCodeLen)
 
                     // Generate StringFog.java
                     StringFogClassGenerator.generate(stringfogFile, applicationId, FOG_CLASS_NAME,
@@ -157,7 +166,7 @@ abstract class StringFogTransform extends Transform {
                                     dirInput.file.getAbsolutePath(), dirOutput.getAbsolutePath()))
                             FileUtils.mkdirs(fileOutput.parentFile)
                             Status fileStatus = entry.getValue()
-                            switch(fileStatus) {
+                            switch (fileStatus) {
                                 case Status.ADDED:
                                 case Status.CHANGED:
                                     if (fileInput.isDirectory()) {

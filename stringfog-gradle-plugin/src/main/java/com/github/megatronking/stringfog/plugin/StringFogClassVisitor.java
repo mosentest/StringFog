@@ -14,6 +14,9 @@
 
 package com.github.megatronking.stringfog.plugin;
 
+
+import static org.objectweb.asm.Opcodes.INVOKESTATIC;
+
 import com.github.megatronking.stringfog.IKeyGenerator;
 import com.github.megatronking.stringfog.IStringFog;
 import com.github.megatronking.stringfog.plugin.utils.TextUtils;
@@ -22,6 +25,7 @@ import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.FieldVisitor;
+import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -30,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Visit the class to execute string fog.
@@ -42,6 +47,7 @@ import java.util.List;
 
     private static final String IGNORE_ANNOTATION = "Lcom/github/megatronking/stringfog" +
             "/annotation/StringFogIgnore;";
+
 
     private boolean isClInitExists;
 
@@ -58,13 +64,15 @@ import java.util.List;
 
     private boolean mIgnoreClass;
 
+    private final int mJunkCodeLen;
 
     /* package */ StringFogClassVisitor(IStringFog stringFogImpl, StringFogMappingPrinter mappingPrinter,
-                                        String fogClassName, ClassWriter cw, IKeyGenerator kg, StringFogMode mode) {
+                                        String fogClassName, ClassWriter cw, IKeyGenerator kg, StringFogMode mode, int junkCodeLen) {
         super(Opcodes.ASM7, cw);
         this.mStringFogImpl = stringFogImpl;
         this.mMappingPrinter = mappingPrinter;
         this.mKeyGenerator = kg;
+        this.mJunkCodeLen = junkCodeLen;
         fogClassName = fogClassName.replace('.', '/');
         if (mode == StringFogMode.base64) {
             this.mInstructionWriter = new Base64InstructionWriter(fogClassName);
@@ -194,6 +202,8 @@ import java.util.List;
         } else {
             mv = new MethodVisitor(Opcodes.ASM7, mv) {
 
+                String lowercase = "abcdefghijklmnopqrstuvwxyz";
+
                 @Override
                 public void visitLdcInsn(Object cst) {
                     if (cst instanceof String && canEncrypted((String) cst)) {
@@ -220,7 +230,14 @@ import java.util.List;
                     super.visitLdcInsn(cst);
                 }
 
+                @Override
+                public void visitLabel(Label label) {
+                    super.visitLabel(label);
+                    //插入代码
+                    mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(mJunkCodeLen)), String.valueOf(lowercase.charAt(new Random().nextInt(lowercase.length()))), "()V", false);
+                }
             };
+//            mv = new MethodVisitorAdviceAdapter(Opcodes.ASM7, mv, access, name, desc, "");
         }
         return mv;
     }
@@ -271,7 +288,7 @@ import java.util.List;
         abstract String write(byte[] key, byte[] value, MethodVisitor mv);
 
         protected void writeClass(MethodVisitor mv, String descriptor) {
-            mv.visitMethodInsn(Opcodes.INVOKESTATIC, mFogClassName, "decrypt", descriptor, false);
+            mv.visitMethodInsn(INVOKESTATIC, mFogClassName, "decrypt", descriptor, false);
         }
 
     }

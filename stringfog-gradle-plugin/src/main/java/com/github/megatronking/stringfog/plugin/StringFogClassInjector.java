@@ -44,15 +44,18 @@ public final class StringFogClassInjector {
     private final IStringFog mStringFogImpl;
     private final StringFogMode mMode;
     private final StringFogMappingPrinter mMappingPrinter;
+    private final int mJunkCodeLen;
 
     public StringFogClassInjector(String[] fogPackages, IKeyGenerator kg, String implementation,
-                                  StringFogMode mode, String fogClassName, StringFogMappingPrinter mappingPrinter) {
+                                  StringFogMode mode, String fogClassName, StringFogMappingPrinter mappingPrinter,
+                                  int junkCodeLen) {
         this.mFogPackages = fogPackages;
         this.mKeyGenerator = kg;
         this.mStringFogImpl = new StringFogWrapper(implementation);
         this.mMode = mode;
         this.mFogClassName = fogClassName;
         this.mMappingPrinter = mappingPrinter;
+        this.mJunkCodeLen = junkCodeLen;
     }
 
     public void doFog2Class(File fileIn, File fileOut) throws IOException {
@@ -116,7 +119,7 @@ public final class StringFogClassInjector {
         } else {
             ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
             ClassVisitor cv = ClassVisitorFactory.create(mStringFogImpl, mMappingPrinter, mFogPackages,
-                    mKeyGenerator, mFogClassName, cr.getClassName() , mMode, cw);
+                    mKeyGenerator, mFogClassName, cr.getClassName(), mMode, cw, mJunkCodeLen);
             cr.accept(cv, 0);
             classOut.write(cw.toByteArray());
             classOut.flush();

@@ -54,7 +54,7 @@ public class StringFogExtension {
     /**
      * How the encrypted string presents in java class, default is base64.
      */
-    StringFogMode mode = base64
+    StringFogMode mode = bytes
 
     /**
      * Enable or disable the StringFog plugin. Default is enabled.
@@ -70,5 +70,9 @@ public class StringFogExtension {
      * The java packages will be applied. Default is effect on all packages.
      */
     String[] fogPackages = []
+
+    String packageName = ""
+
+    int junkCodeLen = 26
 
 }

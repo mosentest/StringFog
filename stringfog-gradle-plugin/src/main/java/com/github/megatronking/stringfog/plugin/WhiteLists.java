@@ -33,10 +33,11 @@ final class WhiteLists {
 
     static {
         // default classes short name in white list.
-        addWhiteList("BuildConfig");
+//        addWhiteList("BuildConfig");
         addWhiteList("R");
         addWhiteList("R2");
         addWhiteList("StringFog");
+        addWhiteList("Binding");
     }
 
     static boolean inWhiteList(String name) {
@@ -52,7 +53,7 @@ final class WhiteLists {
 
     private static boolean checkClass(String name) {
         for (String className : CLASS_WHITE_LIST) {
-            if (name.equals(className)) {
+            if (name.equals(className) || name.endsWith(className)) {
                 return true;
             }
         }
