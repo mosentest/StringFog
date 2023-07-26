@@ -53,6 +53,7 @@ import java.util.List;
     private final StringFogMappingPrinter mMappingPrinter;
     private final IKeyGenerator mKeyGenerator;
     private final String mJunkCodeClass;
+    private final int mJunkCodeClassLen;
     private String mClassName;
     private final InstructionWriter mInstructionWriter;
 
@@ -60,12 +61,13 @@ import java.util.List;
 
 
     /* package */ StringFogClassVisitor(IStringFog stringFogImpl, StringFogMappingPrinter mappingPrinter,
-                                        String fogClassName, ClassVisitor cv, IKeyGenerator kg, StringFogMode mode, String junkCodeClass) {
+                                        String fogClassName, ClassVisitor cv, IKeyGenerator kg, StringFogMode mode, String junkCodeClass, int junkCodeClassLen) {
         super(Opcodes.ASM7, cv);
         this.mStringFogImpl = stringFogImpl;
         this.mMappingPrinter = mappingPrinter;
         this.mKeyGenerator = kg;
         this.mJunkCodeClass = junkCodeClass;
+        this.mJunkCodeClassLen = junkCodeClassLen;
         fogClassName = fogClassName.replace('.', '/');
         if (mode == StringFogMode.base64) {
             this.mInstructionWriter = new Base64InstructionWriter(fogClassName);
@@ -222,7 +224,7 @@ import java.util.List;
                 }
 
             };
-            mv = new MethodVisitorAdviceAdapter(Opcodes.ASM7, mv, access, name, desc, mJunkCodeClass);
+            mv = new MethodVisitorAdviceAdapter(Opcodes.ASM7, mv, access, name, desc, mJunkCodeClass , mJunkCodeClassLen);
         }
         return mv;
     }

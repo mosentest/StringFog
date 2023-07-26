@@ -19,6 +19,8 @@ class MethodVisitorAdviceAdapter extends AdviceAdapter {
     String lowercase = "abcdefghijklmnopqrstuvwxyz";
 
     private String mJunkCodeClass;
+
+    private final int mJunkCodeClassLen;
     private int startLocal;
     private boolean isGetArgs;
 
@@ -32,9 +34,10 @@ class MethodVisitorAdviceAdapter extends AdviceAdapter {
      * @param name          the method's name.
      * @param descriptor    the method's descriptor (see {@link Type Type}).
      */
-    protected MethodVisitorAdviceAdapter(int api, MethodVisitor methodVisitor, int access, String name, String descriptor, String junkCodeClass) {
+    protected MethodVisitorAdviceAdapter(int api, MethodVisitor methodVisitor, int access, String name, String descriptor, String junkCodeClass, int junkCodeClassLen) {
         super(api, methodVisitor, access, name, descriptor);
         mJunkCodeClass = junkCodeClass;
+        this.mJunkCodeClassLen = junkCodeClassLen;
     }
 
     @Override
@@ -54,7 +57,7 @@ class MethodVisitorAdviceAdapter extends AdviceAdapter {
             loadArg(i);
             // 基本类型转换为包装类型
             box(argumentType);
-            mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(lowercase.length())), "arg", "(Ljava/lang/Object;)V", false);
+            mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(mJunkCodeClassLen)), "arg", "(Ljava/lang/Object;)V", false);
             isGetArgs = true;
         }
     }
@@ -68,7 +71,7 @@ class MethodVisitorAdviceAdapter extends AdviceAdapter {
 
     private void randomInsert() {
         loadLocal(startLocal);
-        mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(lowercase.length())), String.valueOf(lowercase.charAt(new Random().nextInt(lowercase.length()))), "(J)V", false);
+        mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(mJunkCodeClassLen)), String.valueOf(lowercase.charAt(new Random().nextInt(mJunkCodeClassLen))), "(J)V", false);
     }
 
     @Override
@@ -104,22 +107,22 @@ class MethodVisitorAdviceAdapter extends AdviceAdapter {
             newInstance(Type.getType("Ljava/lang/StringBuilder;"));
             dup();
             invokeConstructor(Type.getType("Ljava/lang/StringBuilder;"), new Method("<init>", "()V"));
-            visitLdcInsn(lowercase.charAt(new Random().nextInt(lowercase.length())) + getName() + "_time :");
+            visitLdcInsn(lowercase.charAt(new Random().nextInt(mJunkCodeClassLen)) + getName() + "_time :");
             invokeVirtual(Type.getType("Ljava/lang/StringBuilder;"), new Method("append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;"));
             //减法
             loadLocal(end);
             loadLocal(startLocal);
             math(SUB, Type.LONG_TYPE);
             invokeVirtual(Type.getType("Ljava/lang/StringBuilder;"), new Method("append", "(J)Ljava/lang/StringBuilder;"));
-            visitLdcInsn(" ms_" + lowercase.charAt(new Random().nextInt(lowercase.length())));
+            visitLdcInsn(" ms_" + lowercase.charAt(new Random().nextInt(mJunkCodeClassLen)));
             invokeVirtual(Type.getType("Ljava/lang/StringBuilder;"), new Method("append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;"));
             invokeVirtual(Type.getType("Ljava/lang/StringBuilder;"), new Method("toString", "()Ljava/lang/String;"));
             //--- invokeVirtual(Type.getType("Ljava/io/PrintStream;"),new  Method("println","(Ljava/lang/String;)V"));
             //--  invokeVirtual(Type.getType("L" + mJunkCodeClass.replace(".", "/") + ";"), new Method("println", "(Ljava/lang/String;)V"));
-            mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(lowercase.length())), "println", "(Ljava/lang/String;)V", false);
+            mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(mJunkCodeClassLen)), "println", "(Ljava/lang/String;)V", false);
 
             loadLocal(end);
-            mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(lowercase.length())), String.valueOf(lowercase.charAt(new Random().nextInt(lowercase.length()))), "(J)V", false);
+            mv.visitMethodInsn(INVOKESTATIC, "com/mosen/junkcode/" + lowercase.charAt(new Random().nextInt(mJunkCodeClassLen)), String.valueOf(lowercase.charAt(new Random().nextInt(mJunkCodeClassLen))), "(J)V", false);
         }
     }
 }

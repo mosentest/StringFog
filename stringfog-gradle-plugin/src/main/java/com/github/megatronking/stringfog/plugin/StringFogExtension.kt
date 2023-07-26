@@ -2,6 +2,7 @@ package com.github.megatronking.stringfog.plugin
 
 import com.github.megatronking.stringfog.plugin.kg.RandomKeyGenerator
 import java.io.Serializable
+import kotlin.random.Random
 
 abstract class StringFogExtension {
 
@@ -52,5 +53,7 @@ abstract class StringFogExtension {
      * 辣鸡代码类
      */
     var junkCodeClass: String? = null
+
+    var junkCodeClassLen: Int = java.util.Random().nextInt(26)
 
 }
