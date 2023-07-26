@@ -7,3 +7,5 @@
 /captures
 .externalNativeBuild
 /maven
+/localMaven/
+/stringfog-ext/localMaven/
